@@ -1,2 +1,0 @@
-SECRET_KEY = "secert"
-SQLALCHEMY_DATABASE_URI = ""
