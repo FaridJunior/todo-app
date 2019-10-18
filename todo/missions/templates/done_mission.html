@@ -10,6 +10,7 @@
         <h6 class="card-title">{{mission.content}}</h6>
         <div class="btn-group mt-3" role="group" aria-label="...">
             <a href={{url_for('mission.mission_delete',id=mission.id)}} class="btn btn-danger">Delete</a>
+            <a href={{url_for('mission.undo',id=mission.id)}} class="btn btn-info">undo</a>
         </div>
     </div>
 </div>

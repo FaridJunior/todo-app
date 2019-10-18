@@ -61,9 +61,18 @@ def mission_update(id):
     form = UpdateMission()
     mission = Mission.query.get_or_404(id)
     if form.validate_on_submit():
-        mission.content=form.content.data
+        mission.content = form.content.data
         db.session.commit()
         return redirect(url_for('mission.list_missions'))
     else:
         form.content.data = mission.content
     return render_template('update_mission.html', title="Add Mission", form=form, mission=mission)
+
+
+@mission.route('/mission/undo/<int:id>')
+def mission_undo(id):
+    mission = Mission.query.get_or_404(id)
+    if mission:
+        mission.done = False
+    db.session.commit()
+    return redirect(url_for('mission.list_missions'))
