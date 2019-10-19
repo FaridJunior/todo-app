@@ -16,7 +16,7 @@ $ flask run
 * using docker 
 
 ```
-$ docker-compose up 
+$ docker-compose up . 
 
 ```
 
