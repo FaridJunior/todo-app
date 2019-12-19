@@ -1,7 +1,6 @@
 from flask import Blueprint
 from flask import redirect, url_for
 from flask import render_template
-
 from .forms import NewMission, UpdateMission
 from .models import Mission, db
 
@@ -27,7 +26,8 @@ def add_mission():
 
 @mission.route("/list")
 def list_missions():
-    missions = Mission.query.order_by(Mission.id.desc()).filter(Mission.done == False).all()
+    missions = Mission.query.order_by(
+        Mission.id.desc()).filter(Mission.done == False).all()
     return render_template('list_mission.html', title="List Mission", missions=missions)
 
 

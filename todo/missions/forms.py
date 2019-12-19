@@ -3,6 +3,7 @@ from wtforms import SubmitField, TextAreaField
 from wtforms.validators import DataRequired
 
 
+
 class NewMission(FlaskForm):
     content = TextAreaField('Mission', validators=[DataRequired()])
     submit = SubmitField('Add')
