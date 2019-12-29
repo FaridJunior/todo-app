@@ -1,20 +1,23 @@
-from flask import Flask
+from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
-from flask_bcrypt import Bcrypt
+from flask import Flask
+import os
+workdir = os.pardir
 
-bcrypt = Bcrypt()
+
 db = SQLAlchemy()
+migrate = Migrate()
 
 
-def create_app(configfile="config"):
+def create_app(configfile="config.py"):
     from .missions.routes import mission
     from todo.missions import models
     app = Flask(__name__)
     app.config.from_pyfile(configfile)
     db.init_app(app)
+    migrate.init_app(app, db)
     app.register_blueprint(mission)
-    bcrypt.init_app(app)
-    with app.app_context():
-        db.create_all()
-        return app
+    # with app.app_context():
+    #     db.create_all()
+    #     return app
     return app

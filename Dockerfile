@@ -4,6 +4,7 @@ ENV FLASK_APP todo
 ENV FLASK_RUN_HOST 0.0.0.0
 RUN apk add --no-cache gcc musl-dev linux-headers
 COPY requirements.txt requirements.txt
+EXPOSE 5000:5000
 RUN pip install -r requirements.txt
-COPY . .
+COPY . ./COPY
 ENTRYPOINT ["flask", "run"]
