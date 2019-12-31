@@ -16,8 +16,5 @@ def create_app(configfile="config.py"):
     app.config.from_pyfile(configfile)
     db.init_app(app)
     migrate.init_app(app, db)
-    app.register_blueprint(mission)
-    # with app.app_context():
-    #     db.create_all()
-    #     return app
+    app.register_blueprint(mission)   
     return app
