@@ -32,17 +32,20 @@
   </nav>
 
   <div class="container">
+    {%with messages = get_flashed_messages()%}
+    {%if messages%}
+    {%for message in messages %}
+    <div class="alert alert-primary mt-2" role="alert">
+       {{message}}
+    </div>
+    {%endfor%}
+    {%endif%}
+    {%endwith%}
     <div class="row">
         <div class="col-9">
             {%block content%}
             {% endblock %}
           </div>
-      <div class="col-3 mt-4">
-        <button class="btn btn-success" onclick="set_background_color_green()">Green</button>
-        <button class="btn btn-danger" onclick="set_background_color_red()">Red</button>
-        <button class="btn btn-info" onclick="set_background_color_blue()">Blue</button>
-
-      </div>
       
     </div>
   </div>

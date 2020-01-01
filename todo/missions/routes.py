@@ -1,5 +1,5 @@
-from flask import Blueprint
-from flask import redirect, url_for
+from flask import Blueprint 
+from flask import redirect, url_for, flash
 from flask import render_template
 from .forms import NewMission, UpdateMission
 from .models import Mission, db
@@ -20,7 +20,8 @@ def add_mission():
         mission = Mission(content=form.content.data)
         db.session.add(mission)
         db.session.commit()
-        return redirect(url_for('mission.list_missions'))
+        flash("mission was added")
+        return redirect(url_for('mission.add_mission'))
     return render_template('add_mission.html', title="Add Mission", form=form)
 
 
