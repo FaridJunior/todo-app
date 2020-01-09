@@ -9,11 +9,13 @@ login = LoginManager()
 
 def create_app(configfile="config.py"):
     from .missions.routes import mission
+    from .users.routes import user
     from todo.missions import models
     app = Flask(__name__)
     app.config.from_pyfile(configfile)
     db.init_app(app)
     login.init_app(app)
     migrate.init_app(app, db)
-    app.register_blueprint(mission)   
+    app.register_blueprint(mission)
+    app.register_blueprint(user)   
     return app
