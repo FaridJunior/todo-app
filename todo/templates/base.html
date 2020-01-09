@@ -30,10 +30,10 @@
       </ul>
     </div>
       {%if current_user.is_anonymous%}
-      <a class="navbar-brand" href="{{url_for('mission.login')}}">Login</a>
-      <a class="navbar-brand" href="{{url_for('mission.register')}}">Register</a>
+      <a class="navbar-brand" href="{{url_for('user.login')}}">Login</a>
+      <a class="navbar-brand" href="{{url_for('user.register')}}">Register</a>
       {%else%}
-      <a class="navbar-brand" href="{{url_for('mission.logout')}}">Logout</a>
+      <a class="navbar-brand" href="{{url_for('user.logout')}}">Logout</a>
       {%endif%}
       <a class="navbar-brand">{{current_user.username}}</a>
   </nav>
@@ -57,8 +57,6 @@
     </div>
   </div>
 
-
-  <script src="static/javascript/jscript.js"></script>
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
     integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
     crossorigin="anonymous"></script>
