@@ -33,7 +33,7 @@ def login():
         user =  User.query.filter_by(username= form.username.data).first()
         if user is not None and  user.check_password(form.username.data) is not False:
             flash('user login')
-            login_user(user)
+            login_user(user,remember=form.remember.data)
             return redirect(url_for('mission.add_mission'))
         else :
             flash("please enter true user name and pass")
