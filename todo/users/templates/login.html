@@ -16,6 +16,11 @@
         <span style="color: red;">[{{ error }}]</span>
         {% endfor %}
     </p>
-    <p>{{ form.submit() }}</p>
+    <p>
+        {{ form.remember.label }} 
+        {{form.remember()}}
+    </p>
+    <p>{{ form.submit(class="btn btn-primary",) }}</p>
 </form>
+<a href="{{url_for('user.register')}}">Sign Up</a>
 {%endblock%}
