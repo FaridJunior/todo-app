@@ -1,26 +1,29 @@
 {%extends 'base.html'%}
 {%block content%}
-<form action="" method="post">
+ <h5 class="card-title text-center">Sign In</h5>
+<form class="form-signin" action="" method="post">
     {{form.hidden_tag()}}
-    <p>
-        {{ form.username.label }}<br>
-        {{ form.username(size=32) }}<br>
+    <div class="form-label-group">
+        {{ form.username(id="userName" ,class="form-control" ,placeholder="username") }}
+        {{ form.username.label(for="userName")}}
         {% for error in form.username.errors %}
         <span style="color: red;">[{{ error }}]</span>
         {% endfor %}
-    </p>
-    <p>
-        {{ form.password.label }}<br>
-        {{ form.password(size=32) }}<br>
+    </div>
+    <div class="form-label-group">
+        {{ form.password(id="inputPassword",class="form-control",placeholder="Password")}}
+        {{ form.password.label(for="inputPassword")}}
         {% for error in form.password.errors %}
         <span style="color: red;">[{{ error }}]</span>
         {% endfor %}
-    </p>
-    <p>
-        {{ form.remember.label }} 
-        {{form.remember()}}
-    </p>
-    <p>{{ form.submit(class="btn btn-primary",) }}</p>
+    </div>
+    <div class="custom-control custom-checkbox mb-3">
+        {{form.remember(type="checkbox",class="custom-control-input", id="customCheck1")}}
+        {{form.remember.label(class="custom-control-label",for="customCheck1")}}
+    </div>
+    {{ form.submit(class="btn btn-lg btn-primary btn-block text-uppercase",type="submit") }}
+    <br>
 </form>
-<a href="{{url_for('user.register')}}">Sign Up</a>
+No account?<a href="{{url_for('user.register')}}">Sign Up here</a>
+
 {%endblock%}

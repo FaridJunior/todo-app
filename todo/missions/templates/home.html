@@ -1,3 +1,47 @@
 {% extends 'base.html' %}
 {%block content%}
+
+<div class="content-section">
+    <form class="" action="" method="post">
+        {{form.hidden_tag()}}
+        <fieldset class="form-group">
+            <legend style="font-size:16px" class="border-bottom mb-2">Add New Mission</legend>
+            <div class="form-group">
+                {%if form.content.errors %}
+                {{form.content(class="form-control form-control-lg is-invalid")}}
+                <div class="invalid-feedback">
+                    {% for error in form.content.errors %}
+                    <span>{{error}}</span>
+                    {% endfor %}
+                </div>
+                {% else %}
+                {{form.content(class="form-control form-control-lg")}}
+                {% endif %}
+            </div>
+        </fieldset>
+        <div class="form-group">
+            {{form.submit(class="btn btn-outline-info btn-block")}}
+        </div>
+    </form>
+</div>
+
+
+{%if missions%}
+{%for mission in missions%}
+<div class="card mt-4">
+    <div class="card-header">
+        Mission
+    </div>
+    <div class="card-body">
+        <h6 class="card-title">{{mission.content}}</h6>
+        <div class="btn-group mt-3" role="group" aria-label="...">
+            <a href={{url_for('mission.mission_done',id=mission.id)}} class="btn btn-success">Done</a>
+            <a href={{url_for('mission.mission_update',id=mission.id)}} class="btn btn-warning">Update</a>
+            <a href={{url_for('mission.mission_delete',id=mission.id)}} class="btn btn-danger">Delete</a>
+        </div>
+    </div>
+</div>
+{%endfor%}
+{%endif%}
+
 {%endblock%}
