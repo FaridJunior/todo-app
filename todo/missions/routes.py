@@ -1,13 +1,18 @@
-from flask import Blueprint
-from flask import redirect, url_for, flash
+from flask import Blueprint , jsonify
+from flask import redirect, url_for, flash ,request
 from flask import render_template
 from flask_login import login_required, current_user
-
+from flask import current_app as app 
 from .forms import NewMission, UpdateMission
 from .models import Mission, db
-
+import json
 mission = Blueprint("mission", __name__, template_folder='templates')
 
+
+# @mission.after_request
+# def after(response):
+#     print(response.set_data(new="new"))
+#     return response
 
 # @mission.before_request
 # def restrict_bp_to_admins():
@@ -25,9 +30,15 @@ def home():
         db.session.commit()
         flash("mission was added")
         return redirect(url_for('mission.home'))
+    page = request.args.get('page', 1, type=int)
     missions = Mission.query.filter_by(user_id=current_user.id).order_by(
-        Mission.id.desc()).filter(Mission.done == False).all()
-    return render_template('home.html', title="Home", missions=missions, form=form)
+        Mission.id.desc()).filter(Mission.done == False).paginate(
+        page, app.config['POSTS_PER_PAGE'], False)
+    next_url = url_for('mission.home', page=missions.next_num) \
+        if missions.has_next else None
+    prev_url = url_for('mission.home', page=missions.prev_num) \
+        if missions.has_prev else None
+    return render_template('home.html', title="Home", missions=missions.items, form=form,next_url=next_url,prev_url=prev_url)
 
 
 @mission.route("/add", methods=['POST', 'GET'])
@@ -46,16 +57,29 @@ def add_mission():
 @mission.route("/list")
 @login_required
 def list_missions():
+    page = request.args.get('page', 1, type=int)
     missions = Mission.query.filter_by(user_id=current_user.id).order_by(
-        Mission.id.desc()).filter(Mission.done == False).all()
-    return render_template('list_mission.html', title="List Mission", missions=missions)
+        Mission.id.desc()).filter(Mission.done == False).paginate(
+        page, app.config['POSTS_PER_PAGE'], False)
+    next_url = url_for('mission.home', page=missions.next_num) \
+        if missions.has_next else None
+    prev_url = url_for('mission.home', page=missions.prev_num) \
+        if missions.has_prev else None
+    return render_template('list_mission.html', title="Missions", missions=missions.items,next_url=next_url,prev_url=prev_url)
 
 
 @mission.route("/done/list")
 @login_required
 def done_missions():
-    missions = Mission.query.filter(Mission.done == True).all()
-    return render_template('done_mission.html', title="done Mission", missions=missions)
+    page = request.args.get('page', 1, type=int)
+    missions = Mission.query.filter_by(user_id=current_user.id).order_by(
+        Mission.id.desc()).filter(Mission.done == True).paginate(
+        page, app.config['POSTS_PER_PAGE'], False)
+    next_url = url_for('mission.home', page=missions.next_num) \
+        if missions.has_next else None
+    prev_url = url_for('mission.home', page=missions.prev_num) \
+        if missions.has_prev else None
+    return render_template('done_mission.html', title="Done Missions", missions=missions.items,next_url=next_url,prev_url=prev_url)
 
 
 # action in mission
