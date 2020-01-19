@@ -6,6 +6,7 @@ from flask import current_app as app
 from .forms import NewMission, UpdateMission
 from .models import Mission, db
 import json
+from datetime import datetime
 mission = Blueprint("mission", __name__, template_folder='templates')
 
 
@@ -32,7 +33,7 @@ def home():
         return redirect(url_for('mission.home'))
     page = request.args.get('page', 1, type=int)
     missions = Mission.query.filter_by(user_id=current_user.id).order_by(
-        Mission.id.desc()).filter(Mission.done == False).paginate(
+        Mission.timestamp.desc()).filter(Mission.done == False).paginate(
         page, app.config['POSTS_PER_PAGE'], False)
     next_url = url_for('mission.home', page=missions.next_num) \
         if missions.has_next else None
@@ -59,7 +60,7 @@ def add_mission():
 def list_missions():
     page = request.args.get('page', 1, type=int)
     missions = Mission.query.filter_by(user_id=current_user.id).order_by(
-        Mission.id.desc()).filter(Mission.done == False).paginate(
+        Mission.timestamp.desc()).filter(Mission.done == False).paginate(
         page, app.config['POSTS_PER_PAGE'], False)
     next_url = url_for('mission.home', page=missions.next_num) \
         if missions.has_next else None
@@ -111,6 +112,7 @@ def mission_update(id):
     mission = Mission.query.get_or_404(id)
     if form.validate_on_submit():
         mission.content = form.content.data
+        mission.timestamp=datetime.utcnow()
         db.session.commit()
         return redirect(url_for('mission.list_missions'))
     else:

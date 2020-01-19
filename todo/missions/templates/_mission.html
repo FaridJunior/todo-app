@@ -1,6 +1,6 @@
 <div class="card mt-4">
     <div class="card-header">
-        Mission : {{ moment(mission.timestamp).calendar()}}
+       Mission Last Update : <span class="badge badge-dark">{{ moment(mission.timestamp).calendar()}}</span>
     </div>
     <div class="card-body">
         <h6 class="card-title">{{mission.content}}</h6>
