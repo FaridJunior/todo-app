@@ -28,19 +28,7 @@
 
 {%if missions%}
 {%for mission in missions%}
-<div class="card mt-4">
-    <div class="card-header">
-        Mission
-    </div>
-    <div class="card-body">
-        <h6 class="card-title">{{mission.content}}</h6>
-        <div class="btn-group mt-3" role="group" aria-label="...">
-            <a href={{url_for('mission.mission_done',id=mission.id)}} class="btn btn-success">Done</a>
-            <a href={{url_for('mission.mission_update',id=mission.id)}} class="btn btn-warning">Update</a>
-            <a href={{url_for('mission.mission_delete',id=mission.id)}} class="btn btn-danger">Delete</a>
-        </div>
-    </div>
-</div>
+{%include '_mission.html'%} 
 {%endfor%}
 {%endif%}
   <nav aria-label="..." class="mt-4">

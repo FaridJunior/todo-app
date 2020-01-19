@@ -73,7 +73,7 @@ def list_missions():
 def done_missions():
     page = request.args.get('page', 1, type=int)
     missions = Mission.query.filter_by(user_id=current_user.id).order_by(
-        Mission.id.desc()).filter(Mission.done == True).paginate(
+        Mission.timestamp.desc()).filter(Mission.done == True).paginate(
         page, app.config['POSTS_PER_PAGE'], False)
     next_url = url_for('mission.home', page=missions.next_num) \
         if missions.has_next else None
@@ -89,8 +89,9 @@ def mission_done(id):
     mission = Mission.query.get(id)
     if mission:
         mission.done = True
+    flash("mission done")
     db.session.commit()
-    return redirect(url_for('mission.done_missions'))
+    return redirect(url_for('mission.list_missions'))
 
 
 @mission.route('/mission/delete/<int:id>')
@@ -124,4 +125,5 @@ def mission_undo(id):
     if mission:
         mission.done = False
     db.session.commit()
-    return redirect(url_for('mission.list_missions'))
+    flash("mission readd to list.")
+    return redirect(url_for('mission.done_missions'))

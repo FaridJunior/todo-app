@@ -1,0 +1,13 @@
+<div class="card mt-4">
+    <div class="card-header">
+        Mission : {{ moment(mission.timestamp).calendar()}}
+    </div>
+    <div class="card-body">
+        <h6 class="card-title">{{mission.content}}</h6>
+        <div class="btn-group mt-3" role="group" aria-label="...">
+            <a href={{url_for('mission.mission_done',id=mission.id)}} class="btn btn-success">Done</a>
+            <a href={{url_for('mission.mission_update',id=mission.id)}} class="btn btn-warning">Update</a>
+            <a href={{url_for('mission.mission_delete',id=mission.id)}} class="btn btn-danger">Delete</a>
+        </div>
+    </div>
+</div>
