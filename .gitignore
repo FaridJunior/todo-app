@@ -7,9 +7,10 @@ __pycache__/
 .vscode/
 # C extensions
 *.so
-
 .env
 
+# logs 
+logs
 # Distribution / packaging
 .Python
 build/

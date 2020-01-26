@@ -1,3 +1,4 @@
+import os
 from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
 from flask import Flask
@@ -5,10 +6,7 @@ from flask_login import LoginManager
 from flask_moment import Moment
 import logging
 from logging.handlers import SMTPHandler
-
-
-
-
+from logging.handlers import RotatingFileHandler
 
 db = SQLAlchemy()
 migrate = Migrate()
@@ -33,6 +31,7 @@ def create_app(configfile="config.py"):
     app.register_blueprint(user)
     app.register_blueprint(handler.error)
     handle_email_log(app)
+    handle_file_log(app)
     return app
 
 def handle_email_log(app):
@@ -54,3 +53,16 @@ def handle_email_log(app):
     ))
     if not app.debug:
         app.logger.addHandler(mail_handler)
+
+def handle_file_log(app):
+    if not os.path.exists('logs'):
+            os.mkdir('logs')
+            file_handler = RotatingFileHandler('logs/todo.log', maxBytes=20240,
+                                               backupCount=10)
+            file_handler.setFormatter(logging.Formatter(
+                '%(asctime)s %(levelname)s: %(message)s [in %(pathname)s:%(lineno)d]'))
+            file_handler.setLevel(logging.INFO)
+            app.logger.addHandler(file_handler)
+
+            app.logger.setLevel(logging.INFO)
+            app.logger.info('todo startup')
