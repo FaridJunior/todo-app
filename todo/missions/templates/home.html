@@ -2,7 +2,7 @@
 {%block content%}
 
 <div class="content-section">
-    <form class="" action="" method="post">
+    <form class="center mt-2  border border-info rounded" action="" method="post" >
         {{form.hidden_tag()}}
         <fieldset class="form-group">
             <legend style="font-size:16px" class="border-bottom mb-2">Add New Mission</legend>
@@ -25,12 +25,14 @@
     </form>
 </div>
 
-
+<div style="display: flex;
+flex-wrap: wrap;">
 {%if missions%}
 {%for mission in missions%}
 {%include '_mission.html'%} 
 {%endfor%}
 {%endif%}
+</div>
   <nav aria-label="..." class="mt-4">
     <ul class="pagination">
       <li class="page-item {%if not prev_url %} disabled {%endif%}">

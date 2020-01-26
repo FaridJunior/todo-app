@@ -1,3 +1,27 @@
+.center{
+  margin: auto;
+  width: 95%;
+  padding: 10px;
+}
+
+.shadow-div{
+  transform :translate(-4%,-4%);
+  box-shadow: 10px 10px 5px  #aaaaaa;
+}
+.shadow-div:hover {
+  transform:none;
+  box-shadow: none;
+  transition: all 0.5s;
+}
+
+
+.box:hover .inner_box {
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none;
+}
+
+
 :root {
   --input-padding-x: 1.5rem;
   --input-padding-y: .75rem;
